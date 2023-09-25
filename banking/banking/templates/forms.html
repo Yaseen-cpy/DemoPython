@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Information Form</title>
+    <link rel="stylesheet" href="{% static 'mystyle.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 100px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Form</h1>
+        <form method="post" action="submit_handler.php">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <legend>Choose your gender:</legend>
+                <label for="male">Male</label>
+                <input type="radio" name="gender" id="male" value="male" checked>
+                <label for="female">Female</label>
+                <input type="radio" name="gender" id="female" value="female">
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="tel" id="phone_number" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="mail_id">Email Address</label>
+                <input type="email" id="mail_id" name="mail_id" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="district">District</label>
+                <select id="district" name="district" required>
+                    <option value="">Select District</option>
+                    <option value="Ernakulam">Ernakulam</option>
+                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                    <option value="Kozhikode">Kozhikode</option>
+                    <option value="Thrissur">Thrissur</option>
+                    <option value="Kollam">Kollam</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="branch">Branch</label>
+                <select id="branch" name="branch" required>
+                    <option value="">Select Branch</option>
+                </select>
+            </div>
+            <label for="account_type">Account Type:</label>
+            <select id="account_type" name="account_type" required>
+                <option value="Savings Account">Savings Account</option>
+                <option value="Current Account">Current Account</option>
+                <!-- Add more account type options here -->
+            </select><br><br>
+            <div class="form-group">
+                <label>Materials Provided:</label><br>
+                <input type="checkbox" id="debit_card" name="materials[]" value="Debit Card">
+                <label for="debit_card">Debit Card</label><br>
+                <input type="checkbox" id="credit_card" name="materials[]" value="Credit Card">
+                <label for="credit_card">Credit Card</label><br>
+                <input type="checkbox" id="cheque_book" name="materials[]" value="Cheque Book">
+                <label for="cheque_book">Cheque Book</label><br>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn-btn">
+            </div>
+        </form>
+          <a href="{% url 'login' %}">
+        <button class="btn-btn">Log Out</button>
+         </a>
+        <script>
+            const branchOptions = {
+                Ernakulam: ["Aluva", "Edapally"],
+                Thiruvananthapuram: ["Kowdiar", "Kazhakoottam"],
+                Kozhikode: ["Calicut City", "Feroke"],
+                Thrissur: ["Thrissur City", "Kodungallur"],
+                Kollam: ["Kollam City", "Kottarakkara"],
+            };
+
+            function populateBranchDropdown() {
+                const districtSelect = document.getElementById("district");
+                const branchSelect = document.getElementById("branch");
+                const selectedDistrict = districtSelect.value;
+
+                branchSelect.innerHTML = "<option value=''>Select Branch</option>";
+
+                if (selectedDistrict in branchOptions) {
+                    const branches = branchOptions[selectedDistrict];
+                    branches.forEach(branch => {
+                        const option = document.createElement("option");
+                        option.value = branch;
+                        option.text = branch;
+                        branchSelect.appendChild(option);
+                    });
+                }
+            }
+            const districtSelect = document.getElementById("district");
+            districtSelect.addEventListener("change", populateBranchDropdown);
+    </script>
+    </div>
+</body>
+</html>

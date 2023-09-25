@@ -33,7 +33,7 @@
 </div>
 {% else %}
 <div>
-    <center><img class="my_banner my_image_padding" src="{% static 'img/banner.png' %}" alt="Our Products"></center>
+    <center><img class="my_banner my_image_padding" src="{% static 'img/banner.jpg' %}" alt="Our Products"></center>
 </div>
 <br>
 <div>
@@ -55,7 +55,7 @@
         </div>
         {% endfor %}
     </div>
-    <div class="mx-auto">
+    <div class="mx-auto" style= "margin-top:20px">
         {% if products.paginator.num_pages > 1 %}
         <hr>
         <div class="text-center">

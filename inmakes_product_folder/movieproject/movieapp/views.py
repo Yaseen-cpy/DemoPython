@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from . models import Movie
 from . forms import MovieForm
@@ -44,3 +45,10 @@ def delete(request,id):
         movie.delete()
         return redirect('/')
     return render(request,'delete.html')
+
+# def add(request):
+#     if request.method == 'POST':
+#         return redirect ('/')
+#
+#     return render(request, 'index.html')
+
